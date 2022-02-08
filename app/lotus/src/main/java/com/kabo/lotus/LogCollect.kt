@@ -139,7 +139,10 @@ class LogCollect(
         }
 
         private fun createDestFile(): File? {
-            val zipDir: File = context.getDir(ZIP_DIR, Context.MODE_PRIVATE)
+            val zipDir = File(context.filesDir, ZIP_DIR)
+            if (!zipDir.exists()) {
+                zipDir.mkdirs()
+            }
             val indexFile = File(zipDir, INDEX_FILE)
             if (!indexFile.createFileIfNotExist()) {
                 return null
@@ -230,7 +233,10 @@ class LogCollect(
             }
 
             // create app_log dir.
-            val logDir: File = context.getDir(LOG_DIR, Context.MODE_PRIVATE)
+            val logDir = File(context.filesDir, LOG_DIR)
+            if (!logDir.exists()) {
+                logDir.mkdirs()
+            }
             // create app_log/index file.
             val indexFile = File(logDir, INDEX_FILE)
             if (!indexFile.createFileIfNotExist()) {
